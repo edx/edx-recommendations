@@ -8,7 +8,9 @@
 - [ ] Version bumped
 - [ ] Changelog record added
 - [ ] Documentation updated (not only docstrings)
+- [ ] Unit tests added/updated
 - [ ] Commits are squashed
+- [ ] Manual testing instructions provided
 
 **Post merge:**
 - [ ] Create a tag

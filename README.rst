@@ -24,16 +24,6 @@ and are on a command prompt inside the LMS container.
 
     pip uninstall edx-recommendations -y; pip install -e /edx/src/edx-recommendations
 
-   Or, you can run the following make command::
-
-    make install-local
-
-3. Now, get your edx-recommendations development environment set up::
-
-    cd /edx/src/edx-recommendations
-    virtualenv edx-recommendations-env
-    source edx-recommendations-env/bin/activate
-    make requirements
 
 Making Code Changes
 -------------------
@@ -52,21 +42,20 @@ from docker shell of edx-platform. This will increment the version of edx-bulk-g
 
 4. Once the code from step 3 is merged, this will trigger deployment of the correct versions of edx platform and bulk-grades.
 
-Unit Testing
-------------
-mock_apps folder: Since edx-recommendations depends on platform during actual runtime, for unit tests, we need to mock various
-endpoints and calls. To this end, they are mocked in the mock_apps folder.
+.. Unit Testing
+.. ------------
+.. mock_apps folder: Since edx-recommendations depends on platform during actual runtime, for unit tests, we need to mock various
+.. endpoints and calls. To this end, they are mocked in the mock_apps folder.
 
-Since edx-recommendations runs under platform, it is necessary to connect to platform docker::
+.. followed by::
 
-    $ make lms-shell
+..     $ cd /edx/src/edx-recommendations
+..     virtualenv edx-recommendations-env
+..     source edx-recommendations-env/bin/activate
+..     make requirements
+..     make test
 
-followed by::
-
-    $ cd /edx/src/edx-recommendations
-    make test
-
-This will run the unit tests and code coverage numbers
+.. This will run the unit tests and code coverage numbers
 
 License
 -------
