@@ -1,192 +1,108 @@
 edx-recommendations
-#############################
+=============================
 
-.. note::
+|license-badge|
 
-  This README was auto-generated. Maintainer: please review its contents and
-  update all relevant sections. Instructions to you are marked with
-  "PLACEHOLDER" or "TODO". Update or remove those sections, and remove this
-  note when you are done.
+Support for learner recommendations. This adds API for fetching the recommendations from different sources like Algolia and Amplitude.
 
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
-|license-badge| |status-badge|
+Overview
+---------
 
-Purpose
-*******
+edx-recommendations is a plugin that runs under lms. It uses the configuration settings defined in lms as well.
+In order to use, the library must be installed into edx-platform. The purpose of this plugin is to fetch the recommendations from different sources.
 
-One-line description for README and other doc files.
+Using with Docker Devstack
+--------------------------
+Prerequisite: Have your Open edX https://github.com/openedx/devstack properly installed.
+Note: When you see "from inside the lms" below, it means that you've run ``make lms-shell`` from your devstack directory
+and are on a command prompt inside the LMS container.
 
-TODO: The ``README.rst`` file should start with a brief description of the repository and its purpose.
-It should be described in the context of other repositories under the ``openedx``
-organization. It should make clear where this fits in to the overall Open edX
-codebase and should be oriented towards people who are new to the Open edX
-project.
+1. | Clone this repo into ``../src/`` directory (relative to your "devstack" repo location). This will mount the directory
+   | in a way that is accessible to the lms container.
 
-Getting Started
-***************
+2. From inside the lms, uninstall bulk-grades and reinstall your local copy. You can just copy the following line::
 
-Developing
-==========
+    pip uninstall edx-recommendations -y; pip install -e /edx/src/edx-recommendations
 
-One Time Setup
---------------
-.. code-block::
+   Or, you can run the following make command::
 
-  # Clone the repository
-  git clone git@github.com:openedx/edx-recommendations.git
-  cd edx-recommendations
+    make install-local
 
-  # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
-  mkvirtualenv -p python3.8 edx-recommendations
+3. Now, get your edx-recommendations development environment set up::
 
+    cd /edx/src/edx-recommendations
+    virtualenv edx-recommendations-env
+    source edx-recommendations-env/bin/activate
+    make requirements
 
-Every time you develop something in this repo
----------------------------------------------
-.. code-block::
+Making Code Changes
+-------------------
 
-  # Activate the virtualenv
-  workon edx-recommendations
+1. | After checking out a new branch, increment ``__version__`` by the smallest possible value located in ``edx-recommendations/__init__.py``.
+   | This will allow edx-platform to pick up the new version.
 
-  # Grab the latest code
-  git checkout main
-  git pull
+2. | Once a branch has been merged, it is necessary to make a release on github, specifying the new version from
+   | ``__version__`` set above.
 
-  # Install/update the dev requirements
-  make requirements
+3. In order for platform to use the newest version of edx-recommendations, it is necessary to run the::
 
-  # Run the tests and quality checks (to verify the status before you make any changes)
-  make validate
+    $ make upgrade
 
-  # Make a new branch for your changes
-  git checkout -b <your_github_username>/<short_description>
+from docker shell of edx-platform. This will increment the version of edx-bulk-grades to the correct one.
 
-  # Using your favorite editor, edit the code to make your change.
-  vim ...
+4. Once the code from step 3 is merged, this will trigger deployment of the correct versions of edx platform and bulk-grades.
 
-  # Run your new tests
-  pytest ./path/to/new/tests
+Unit Testing
+------------
+mock_apps folder: Since edx-recommendations depends on platform during actual runtime, for unit tests, we need to mock various
+endpoints and calls. To this end, they are mocked in the mock_apps folder.
 
-  # Run all the tests and quality checks
-  make validate
+Since edx-recommendations runs under platform, it is necessary to connect to platform docker::
 
-  # Commit all your changes
-  git commit ...
-  git push
+    $ make lms-shell
 
-  # Open a PR and ask for review.
+followed by::
 
-Deploying
-=========
+    $ cd /edx/src/edx-recommendations
+    make test
 
-TODO: How can a new user go about deploying this component? Is it just a few
-commands? Is there a larger how-to that should be linked here?
-
-PLACEHOLDER: For details on how to deploy this component, see the `deployment how-to`_
-
-.. _deployment how-to: https://docs.openedx.org/projects/edx-recommendations/how-tos/how-to-deploy-this-component.html
-
-Getting Help
-************
-
-Documentation
-=============
-
-PLACEHOLDER: Start by going through `the documentation`_.  If you need more help see below.
-
-.. _the documentation: https://docs.openedx.org/projects/edx-recommendations
-
-(TODO: `Set up documentation <https://openedx.atlassian.net/wiki/spaces/DOC/pages/21627535/Publish+Documentation+on+Read+the+Docs>`_)
-
-More Help
-=========
-
-If you're having trouble, we have discussion forums at
-https://discuss.openedx.org where you can connect with others in the
-community.
-
-Our real-time conversations are on Slack. You can request a `Slack
-invitation`_, then join our `community Slack workspace`_.
-
-For anything non-trivial, the best path is to open an issue in this
-repository with as many details about the issue you are facing as you
-can provide.
-
-https://github.com/openedx/edx-recommendations/issues
-
-For more information about these options, see the `Getting Help`_ page.
-
-.. _Slack invitation: https://openedx.org/slack
-.. _community Slack workspace: https://openedx.slack.com/
-.. _Getting Help: https://openedx.org/getting-help
+This will run the unit tests and code coverage numbers
 
 License
-*******
+-------
 
 The code in this repository is licensed under the AGPL 3.0 unless
 otherwise noted.
 
-Please see `LICENSE.txt <LICENSE.txt>`_ for details.
+Please see ``LICENSE.txt`` for details.
 
-Contributing
-************
+How To Contribute
+-----------------
 
 Contributions are very welcome.
-Please read `How To Contribute <https://openedx.org/r/how-to-contribute>`_ for details.
 
-This project is currently accepting all types of contributions, bug fixes,
-security fixes, maintenance work, or new features.  However, please make sure
-to have a discussion about your new feature idea with the maintainers prior to
-beginning development to maximize the chances of your change being accepted.
-You can start a conversation by creating a new issue on this repo summarizing
-your idea.
+Please read `How To Contribute <https://github.com/openedx/.github/blob/master/CONTRIBUTING.md>`_ for details.
 
-The Open edX Code of Conduct
-****************************
+The pull request description template should be automatically applied if you are creating a pull request from GitHub. Otherwise you
+can find it at `PULL_REQUEST_TEMPLATE.md <https://github.com/openedx/edx-recommendations/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`_.
 
-All community members are expected to follow the `Open edX Code of Conduct`_.
-
-.. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
-
-People
-******
-
-The assigned maintainers for this component and other project details may be
-found in `Backstage`_. Backstage pulls this data from the ``catalog-info.yaml``
-file in this repo.
-
-.. _Backstage: https://open-edx-backstage.herokuapp.com/catalog/default/component/edx-recommendations
+The issue report template should be automatically applied if you are creating an issue on GitHub as well. Otherwise you
+can find it at `ISSUE_TEMPLATE.md <https://github.com/openedx/edx-recommendations/blob/master/.github/ISSUE_TEMPLATE.md>`_.
 
 Reporting Security Issues
-*************************
+-------------------------
 
-Please do not report security issues in public. Please email security@tcril.org.
+Please do not report security issues in public. Please email security@edx.org.
 
-.. |pypi-badge| image:: https://img.shields.io/pypi/v/edx-recommendations.svg
-    :target: https://pypi.python.org/pypi/edx-recommendations/
-    :alt: PyPI
+Getting Help
+------------
 
-.. |ci-badge| image:: https://github.com/openedx/edx-recommendations/workflows/Python%20CI/badge.svg?branch=main
-    :target: https://github.com/openedx/edx-recommendations/actions
-    :alt: CI
+Have a question about this repository, or about Open edX in general?  Please
+refer to this `list of resources`_ if you need any assistance.
 
-.. |codecov-badge| image:: https://codecov.io/github/openedx/edx-recommendations/coverage.svg?branch=main
-    :target: https://codecov.io/github/openedx/edx-recommendations?branch=main
-    :alt: Codecov
+.. _list of resources: https://open.edx.org/getting-help
 
-.. |doc-badge| image:: https://readthedocs.org/projects/edx-recommendations/badge/?version=latest
-    :target: https://docs.openedx.org/projects/edx-recommendations
-    :alt: Documentation
 
-.. |pyversions-badge| image:: https://img.shields.io/pypi/pyversions/edx-recommendations.svg
-    :target: https://pypi.python.org/pypi/edx-recommendations/
-    :alt: Supported Python versions
-
-.. |license-badge| image:: https://img.shields.io/github/license/openedx/edx-recommendations.svg
-    :target: https://github.com/openedx/edx-recommendations/blob/main/LICENSE.txt
+.. |license-badge| image:: https://img.shields.io/github/license/edx/edx-recommendations.svg
+    :target: https://github.com/openedx/edx-recommendations/blob/master/LICENSE.txt
     :alt: License
-
-.. TODO: Choose one of the statuses below and remove the other status-badge lines.
-.. |status-badge| image:: https://img.shields.io/badge/Status-Experimental-yellow
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Deprecated-orange
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Unsupported-red
