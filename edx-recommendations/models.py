@@ -1,3 +1,3 @@
 """
-Database models for recommendations.
+Database models for edx-recommendations.
 """

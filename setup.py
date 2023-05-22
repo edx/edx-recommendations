@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Package metadata for recommendations.
+Package metadata for edx-recommendations.
 """
 import os
 import re
@@ -89,7 +89,7 @@ def is_requirement(line):
     return line and line.strip() and not line.startswith(("-r", "#", "-e", "git+", "-c"))
 
 
-VERSION = get_version('recommendations', '__init__.py')
+VERSION = get_version('edx-recommendations', '__init__.py')
 
 if sys.argv[-1] == 'tag':
     print("Tagging the version on github:")
@@ -101,7 +101,7 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding="u
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst'), encoding="utf8").read()
 
 setup(
-    name='edx-recommendations',
+    name='edx-edx-recommendations',
     version=VERSION,
     description="""One-line description for README and other doc files.""",
     long_description=README + '\n\n' + CHANGELOG,
@@ -109,7 +109,7 @@ setup(
     author_email='oscm@edx.org',
     url='https://github.com/openedx/edx-recommendations',
     packages=find_packages(
-        include=['recommendations', 'recommendations.*'],
+        include=['edx-recommendations', 'edx-recommendations.*'],
         exclude=["*tests"],
     ),
 
