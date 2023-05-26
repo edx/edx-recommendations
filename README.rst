@@ -1,46 +1,45 @@
 edx-recommendations
 =============================
 
-|license-badge|
+|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
+|license-badge| |status-badge|
 
-Support for learner recommendations. This adds API for fetching the recommendations from different sources like Algolia and Amplitude.
+A plugin for personalized recommendations
+
+Please tag **@openedx/vanguards** on any PRs or issues.  Thanks!
 
 Overview
 ---------
 
-edx-recommendations is a plugin that runs under lms. It uses the configuration settings defined in lms as well.
-In order to use, the library must be installed into edx-platform. The purpose of this plugin is to fetch the recommendations from different sources.
+The ``edx-recommendations`` is a Django app that serves REST API endpoints for
+getting personalized recommendations for learner. It used different sources
+like Algolia and Amplitude for recommendations.
 
-Using with Docker Devstack
+edx-recommendations is a plugin that runs under lms. It uses same configuration settings as defined in lms.
+It can be used by installing in edx-platform.
+
+How to install locally
 --------------------------
-Prerequisite: Have your Open edX https://github.com/openedx/devstack properly installed.
-Note: When you see "from inside the lms" below, it means that you've run ``make lms-shell`` from your devstack directory
-and are on a command prompt inside the LMS container.
 
 1. | Clone this repo into ``../src/`` directory (relative to your "devstack" repo location). This will mount the directory
    | in a way that is accessible to the lms container.
 
-2. From inside the lms, uninstall bulk-grades and reinstall your local copy. You can just copy the following line::
+2. From lms-shell, uninstall edx-recommendations and install your local copy. You can run the following command::
 
     pip uninstall edx-recommendations -y; pip install -e /edx/src/edx-recommendations
 
 
-Making Code Changes
--------------------
+How to create a new release
+---------------------------
 
-1. | After checking out a new branch, increment ``__version__`` by the smallest possible value located in ``edx-recommendations/__init__.py``.
+1. | Checkout to a new branch and increment ``__version__`` by the smallest possible value located in ``edx-recommendations/__init__.py``.
    | This will allow edx-platform to pick up the new version.
 
-2. | Once a branch has been merged, it is necessary to make a release on github, specifying the new version from
-   | ``__version__`` set above.
+2. Update the ``CHANGELOG.rst`` with the brief description of your changes.
 
-3. In order for platform to use the newest version of edx-recommendations, it is necessary to run the::
+2. | Once a branch has been merged, it is necessary to create a release on github, specifying the new version from
+   | ``__version__`` set above. This will publish the release to PyPI.
 
-    $ make upgrade
-
-from docker shell of edx-platform. This will increment the version of edx-bulk-grades to the correct one.
-
-4. Once the code from step 3 is merged, this will trigger deployment of the correct versions of edx platform and bulk-grades.
 
 .. Unit Testing
 .. ------------
