@@ -1,8 +1,7 @@
 edx-recommendations
 =============================
 
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
-|license-badge| |status-badge|
+|pypi-badge| |license-badge| |Status|
 
 A plugin for personalized recommendations
 
@@ -94,3 +93,9 @@ refer to this `list of resources`_ if you need any assistance.
 .. |license-badge| image:: https://img.shields.io/github/license/edx/edx-recommendations.svg
     :target: https://github.com/openedx/edx-recommendations/blob/master/LICENSE.txt
     :alt: License
+
+.. |pypi-badge| image:: https://img.shields.io/pypi/v/edx-recommendations.svg
+    :target: https://pypi.python.org/pypi/edx-ace/
+    :alt: PyPI
+
+.. |Status| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
