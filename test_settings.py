@@ -32,14 +32,14 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'edx-recommendations',
+    'edx_recommendations',
 )
 
 LOCALE_PATHS = [
-    root('edx-recommendations', 'conf', 'locale'),
+    root('edx_recommendations', 'conf', 'locale'),
 ]
 
-ROOT_URLCONF = 'edx-recommendations.urls'
+ROOT_URLCONF = 'edx_recommendations.urls'
 
 SECRET_KEY = 'insecure-secret-key'
 

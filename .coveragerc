@@ -1,7 +1,7 @@
 [run]
 branch = True
 data_file = .coverage
-source=recommendations
+source=edx_recommendations
 omit =
     test_settings.py
     */migrations/*

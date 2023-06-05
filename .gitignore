@@ -50,12 +50,6 @@ ghostdriver.log
 output/*.html
 output/*/index.html
 
-# Sphinx
-docs/_build
-docs/modules.rst
-docs/recommendations.rst
-docs/recommendations.*.rst
-
 # Private requirements
 requirements/private.in
 requirements/private.txt
