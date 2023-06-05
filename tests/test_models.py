@@ -10,3 +10,4 @@ def test_placeholder():
 
     (If there are no tests, it will exit with code 5.)
     """
+    pass
