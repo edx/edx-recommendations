@@ -39,7 +39,7 @@ LOCALE_PATHS = [
     root('edx_recommendations', 'conf', 'locale'),
 ]
 
-ROOT_URLCONF = 'edx_recommendations.urls'
+ROOT_URLCONF = 'edx_recommendations.api.urls'
 
 SECRET_KEY = 'insecure-secret-key'
 
