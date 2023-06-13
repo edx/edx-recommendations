@@ -103,16 +103,17 @@ CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst'), encod
 setup(
     name='edx-recommendations',
     version=VERSION,
-    description="""One-line description for README and other doc files.""",
+    description="""A edx-platform plugin for learner recommendations.""",
     long_description=README + '\n\n' + CHANGELOG,
     author='edX',
     author_email='oscm@edx.org',
     url='https://github.com/openedx/edx-recommendations',
-    packages=find_packages(
-        include=['edx_recommendations', 'edx_recommendations.*'],
-        exclude=["*tests"],
-    ),
-
+    packages=['edx_recommendations'],
+    entry_points={
+        'lms.djangoapp': [
+            'edx_recommendations = edx_recommendations.apps:EdxRecommendationsConfig',
+        ],
+    },
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
     python_requires=">=3.8",
